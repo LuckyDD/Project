@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class Connect
+public class DataAccessObject
 {
     private String path;
     private Connection con;
@@ -24,7 +24,7 @@ public class Connect
     public static void main (String []a) {
    
 }
-    public Connect()
+    public DataAccessObject()
     {
         try
         {
@@ -38,39 +38,26 @@ public class Connect
             
         } catch (SQLException ex)
         {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex)
         {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public ResultSet executeQuery( String query )
+    public ResultSet executeQuery ( String query )throws SQLException
     {
-        try
-        {           
-            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);            
-            rs = st.executeQuery(query);
-            rsm = rs.getMetaData();
-        } catch (SQLException ex)
-        {
-            rs = null;
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);                       
+        rs = st.executeQuery(query);          
+        rsm = rs.getMetaData();
 
         return rs;
     }
 
-    public void executeUpdate( String query )
+    public void executeUpdate( String query ) throws SQLException
     {
-        try
-        {
-            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);            
-            st.executeUpdate(query);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);            
+        st.executeUpdate(query);
     }
     
     public PreparedStatement getPreparedStatement(String query)
@@ -78,7 +65,7 @@ public class Connect
         try {
             return con.prepareStatement(query);
         } catch (SQLException ex) {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
@@ -104,7 +91,7 @@ public class Connect
             
         } catch (SQLException ex)
         {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return rowData;
@@ -117,7 +104,7 @@ public class Connect
             con.close();
         } catch (SQLException ex)
         {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataAccessObject.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
