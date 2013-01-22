@@ -1,3 +1,4 @@
+
 package V1;
 
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class MainForm extends javax.swing.JFrame {
                 
     }
     
-    Connect con = new Connect();
+    DataAccessObject con = new DataAccessObject();
     ResultSet rsl;
     ResultSetMetaData rslm;
     int x = 1;
@@ -297,20 +298,22 @@ public class MainForm extends javax.swing.JFrame {
         }else if(flag = false){
             JOptionPane.showMessageDialog(rootPane, "Invalid ID/Password");
         }else if(flag = true){
-            rsl = con.executeQuery("SELECT EmployeeID FROM MsEmployee WHERE EmployeeID = " + IDfield);
-            if(rsl != null){
+            try {
+                rsl = con.executeQuery("SELECT EmployeeID FROM MsEmployee WHERE EmployeeID = " + IDfield);
+
                     try {
                     nama = rsl.getString(1);
                 } catch (SQLException ex) {
                     Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Invalid ID/Password");                
-            }
+
             JOptionPane.showMessageDialog(rootPane, "Login Success,\nWelcome " + nama);
             MenuVisible();
             jInternalFrame1.setVisible(false);
             Accountmenu.setText(nama);
+            } catch (SQLException ex) {
+                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         
