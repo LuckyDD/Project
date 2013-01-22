@@ -1,4 +1,3 @@
-
 package V1;
 
 import java.sql.ResultSet;
@@ -299,10 +298,14 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Invalid ID/Password");
         }else if(flag = true){
             rsl = con.executeQuery("SELECT EmployeeID FROM MsEmployee WHERE EmployeeID = " + IDfield);
-            try {
-                nama = rsl.getString(1);
-            } catch (SQLException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            if(rsl != null){
+                    try {
+                    nama = rsl.getString(1);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Invalid ID/Password");                
             }
             JOptionPane.showMessageDialog(rootPane, "Login Success,\nWelcome " + nama);
             MenuVisible();
